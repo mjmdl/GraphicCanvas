@@ -36,6 +36,7 @@ class Graphic
 
         this.ctx.beginPath();
         this.ctx.arc(pos.x * this.cell.w, pos.y * this.cell.h, width, 0, Math.PI * 2, true);
+        
         this.ctx.fill();
     }
 
