@@ -18,6 +18,19 @@ class Graphic
         return {w: this.canvas.width, h: this.canvas.height};
     }
 
+    borders()
+    {
+        let borders = 
+        {
+            top: this.size().w / 2, 
+            bottom: - this.size().w / 2, 
+            right: this.size().h / 2, 
+            left: -this.size().h / 2
+        };
+
+        return borders;
+    }
+
     line(begin, end, style, width)
     {
         this.ctx.strokeStyle = style;
@@ -36,7 +49,6 @@ class Graphic
 
         this.ctx.beginPath();
         this.ctx.arc(pos.x * this.cell.w, pos.y * this.cell.h, width, 0, Math.PI * 2, true);
-        
         this.ctx.fill();
     }
 
@@ -66,9 +78,27 @@ class Graphic
 
     math2(begin, end, inc, style, width, f)
     {
+        let last = {x: begin, y: f(begin)};
+        let borders = this.borders();
+
         for (let x = begin; x < end; x += inc)
         {
-            this.dot({x, y: f(x)}, style, width);
+            let current = {x, y: f(x)};
+            this.line(last, current, style, width);
+            last = current;
+        }
+    }
+
+    math3(begin, end, inc, style, width, f)
+    {
+        let fst = f(begin);
+        let last = {x: fst.x, y: fst.y, z: begin};
+
+        for (let z = begin; z < end; z += inc)
+        {
+            let current = f(z);
+            this.line(last, current, style, width);
+            last = current;
         }
     }
 }

@@ -1,8 +1,15 @@
 (() => {
-    let graphic = new Graphic(document.getElementById("graphic"),
+    let g = new Graphic(document.getElementById("graphic"),
                               {w: 700, h: 400},
                               {w: 40, h: 40});
 
-    graphic.grid({x: "#FAA", y: "#AAF"}, {x: "#CCC", y: "#CCC"}, 2, 1);
-    graphic.math2(-2, 2, 0.01, "#0F0", 1, (x) => 2 - x * x);
+    g.grid({x: "#FAA", y: "#AAF"}, {x: "#CCC", y: "#CCC"}, 2, 1);
+    
+    g.math3(-10, 10, 0.01, "#0FF", 1, function(z)
+    {
+        let result = {x: Math.tan(z), y: Math.tan(z * z) / 10};
+        return result;
+    });
+
+    // g.math2(-8.5, 8.5, 0.01, "#0F0", 1, (x) => Math.cos(x / Math.sin(x)));
 })();
